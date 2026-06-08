@@ -4,7 +4,6 @@ import { useRecipePipeline, RecipeData, RecipeMetrics, IngredientMaterial } from
 import { ArcheAgeProficiencyLevel, VALID_PROFESSIONS, ArcheAgeProfession } from '../utils/laborEngine';
 import { formatCopperToGoldString, parseGoldToCopper } from '../utils/currency';
 import { RecipeVirtualList } from './RecipeVirtualList';
-import { AdminConsole } from './AdminConsole';
 
 // The 22 core professions
 const PROFESSIONS: ArcheAgeProfession[] = Array.from(VALID_PROFESSIONS);
@@ -90,43 +89,7 @@ export const Dashboard: React.FC = () => {
   // Database reactivity version
   const [dbVersion, setDbVersion] = useState(0);
 
-  // Routing View state
-  const [view, setView] = useState<'dashboard' | 'admin'>(() => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.pathname;
-      const hash = window.location.hash;
-      if (path === '/admin-console' || hash === '#/admin-console') {
-        return 'admin';
-      }
-    }
-    return 'dashboard';
-  });
 
-  useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname;
-      const hash = window.location.hash;
-      if (path === '/admin-console' || hash === '#/admin-console') {
-        setView('admin');
-      } else {
-        setView('dashboard');
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    window.addEventListener('hashchange', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('hashchange', handlePopState);
-    };
-  }, []);
-
-  const navigateTo = (newView: 'dashboard' | 'admin') => {
-    setView(newView);
-    if (typeof window !== 'undefined') {
-      const newPath = newView === 'admin' ? '/admin-console' : '/';
-      window.history.pushState({}, '', newPath);
-    }
-  };
 
   // Load recipes and materials from DB once initialized
   useEffect(() => {
@@ -364,15 +327,7 @@ export const Dashboard: React.FC = () => {
     );
   }
 
-  // Render Admin Console if active
-  if (view === 'admin') {
-    return (
-      <AdminConsole
-        onBackToDashboard={() => navigateTo('dashboard')}
-        onRefreshTrigger={() => setDbVersion((v) => v + 1)}
-      />
-    );
-  }
+
 
   return (
     <div className="bg-[#121212] text-slate-200 min-h-screen flex flex-col font-sans select-none antialiased">
@@ -389,13 +344,7 @@ export const Dashboard: React.FC = () => {
 
         {/* Global Control Inputs */}
         <div className="flex items-center space-x-6">
-          {/* Admin Switcher */}
-          <button
-            onClick={() => navigateTo('admin')}
-            className="bg-[#242424] hover:bg-[#333] text-amber-500 border border-[#3c3c3c] text-xs font-semibold px-3 py-1.5 rounded transition-all duration-150"
-          >
-            ⚙ Admin Console
-          </button>
+
 
           {/* Performance Profiler Badge */}
           <div className="text-right">

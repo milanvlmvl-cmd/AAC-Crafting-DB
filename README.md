@@ -33,9 +33,7 @@ Welcome to the ArcheAge Classic Crafting Console! This calculator helps you dete
    - 1 Gold = 100 Silver = 10,000 Copper.
    - You can enter overrides as standard decimals (e.g. `1.25` for 1g 25s) or raw game strings (e.g. `1g 25s`).
 
-5. **Admin Console**:
-   - Click the **⚙ Admin Console** button in the header to navigate to the database management interface.
-   - From here, developers and advanced users can inspect database tables directly, manage local price overrides, check validation rules, and run database diagnostic tests.
+
 
 ---
 
