@@ -92,8 +92,9 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
     else if (normalizedLevel === 'celebrity') discountPercent = 30;
     else if (normalizedLevel === 'famed') discountPercent = 40;
 
-    const netProfitGold = metrics ? metrics.profit_silver / 100 : 0;
-    const slRatio = metrics ? metrics.ratio_silver_per_labor : 0;
+    const isUnpriced = metrics ? metrics.isUnpriced : false;
+    const netProfitGold = metrics && metrics.profit_silver !== null ? metrics.profit_silver / 100 : 0;
+    const slRatio = metrics && metrics.ratio_silver_per_labor !== null ? metrics.ratio_silver_per_labor : 0;
     const isSLPositive = slRatio >= 0;
 
     return (
@@ -113,19 +114,27 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
             </span>
           </div>
           <div className="flex items-center space-x-3">
-            <span
-              className={`text-xs font-bold px-2.5 py-0.5 rounded shadow-sm ${
-                isSLPositive
-                  ? 'bg-emerald-950/60 border border-emerald-800 text-emerald-400'
-                  : 'bg-rose-950/60 border border-rose-800 text-rose-400'
-              }`}
-            >
-              {slRatio.toFixed(2)} S/L
-            </span>
-            <span className="text-xs font-mono text-slate-300 font-bold">
-              {netProfitGold >= 0 ? '+' : ''}
-              {netProfitGold.toFixed(4)} G
-            </span>
+            {isUnpriced ? (
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded shadow-sm bg-zinc-800 border border-zinc-700 text-zinc-400">
+                Market Price Missing
+              </span>
+            ) : (
+              <>
+                <span
+                  className={`text-xs font-bold px-2.5 py-0.5 rounded shadow-sm ${
+                    isSLPositive
+                      ? 'bg-emerald-950/60 border border-emerald-800 text-emerald-400'
+                      : 'bg-rose-950/60 border border-rose-800 text-rose-400'
+                  }`}
+                >
+                  {slRatio.toFixed(2)} S/L
+                </span>
+                <span className="text-xs font-mono text-slate-300 font-bold">
+                  {netProfitGold >= 0 ? '+' : ''}
+                  {netProfitGold.toFixed(4)} G
+                </span>
+              </>
+            )}
           </div>
         </div>
 

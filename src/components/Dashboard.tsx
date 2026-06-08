@@ -222,8 +222,7 @@ export const Dashboard: React.FC = () => {
     // 3. Hide Unpriced Crafts Switch Filter
     if (hideUnpriced) {
       list = list.filter((item) => {
-        // Unpriced defined as resolved output price being 0
-        return item.metrics && item.metrics.resolved_output_price_copper > 0;
+        return item.metrics && !item.metrics.isUnpriced;
       });
     }
 
@@ -234,20 +233,41 @@ export const Dashboard: React.FC = () => {
 
     // 5. Silver-per-Labor (S/L) Ratio Filter Boundaries
     list = list.filter((item) => {
-      const ratio = item.metrics ? item.metrics.ratio_silver_per_labor : 0;
+      if (item.metrics && item.metrics.isUnpriced) return true;
+      const ratio = item.metrics && item.metrics.ratio_silver_per_labor !== null ? item.metrics.ratio_silver_per_labor : 0;
       return ratio >= minSLRatio && ratio <= maxSLRatio;
     });
 
-    // 6. Sort Execution
+    // 6. Sort Execution (3-Tier Hierarchical Sorting)
     list.sort((a, b) => {
+      const getTier = (item: typeof a) => {
+        if (!item.metrics) return 3;
+        if (item.metrics.isUnpriced) return 3;
+        const ratio = item.metrics.ratio_silver_per_labor ?? 0;
+        return ratio >= 0 ? 1 : 2;
+      };
+
+      const tierA = getTier(a);
+      const tierB = getTier(b);
+
+      if (tierA !== tierB) {
+        return tierA - tierB; // Tier 1 (top) -> Tier 2 (middle) -> Tier 3 (bottom)
+      }
+
+      // If both are Tier 3 (unpriced), sort alphabetically by output name
+      if (tierA === 3) {
+        return a.recipe.output_name.localeCompare(b.recipe.output_name);
+      }
+
+      // If both are in the same tier (1 or 2), sort by user-selected sortField
       let comparison = 0;
       if (sortField === 'ratio') {
-        const valA = a.metrics ? a.metrics.ratio_silver_per_labor : 0;
-        const valB = b.metrics ? b.metrics.ratio_silver_per_labor : 0;
+        const valA = a.metrics ? (a.metrics.ratio_silver_per_labor ?? 0) : 0;
+        const valB = b.metrics ? (b.metrics.ratio_silver_per_labor ?? 0) : 0;
         comparison = valA - valB;
       } else if (sortField === 'profit') {
-        const valA = a.metrics ? a.metrics.profit_silver : 0;
-        const valB = b.metrics ? b.metrics.profit_silver : 0;
+        const valA = a.metrics ? (a.metrics.profit_silver ?? 0) : 0;
+        const valB = b.metrics ? (b.metrics.profit_silver ?? 0) : 0;
         comparison = valA - valB;
       } else {
         comparison = a.recipe.output_name.localeCompare(b.recipe.output_name);

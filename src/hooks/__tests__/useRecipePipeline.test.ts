@@ -60,7 +60,7 @@ describe('Recipe Calculation Engine & Pipeline', () => {
       expect(result3.resolved_output_price_copper).toBe(12000); // 30d avg is 1.2
       expect(result3.warnings.length).toBe(0);
 
-      // 4. Missing all prices -> defaults to 0 and flags warnings
+      // 4. Missing all prices -> sets isUnpriced to true, profit/ratio to null, but computes material cost normally
       const recipeMissingAll: RecipeData = {
         ...mockRecipe,
         output_avg_7d: null,
@@ -70,16 +70,16 @@ describe('Recipe Calculation Engine & Pipeline', () => {
             material_item_id: 2001,
             name: 'Cotton',
             quantity: 10,
-            avg_7d: null,
-            avg_30d: null,
+            avg_7d: 0.1,
+            avg_30d: 0.08,
           }
         ]
       };
       const result4 = calculateRecipeMetrics(recipeMissingAll, {}, 'Amateur');
-      expect(result4.resolved_output_price_copper).toBe(0);
-      expect(result4.ingredients[0].resolved_price_copper).toBe(0);
-      expect(result4.warnings.length).toBe(2); // One for output, one for cotton ingredient
-      expect(result4.ingredients[0].warning).toBe(true);
+      expect(result4.isUnpriced).toBe(true);
+      expect(result4.profit_silver).toBeNull();
+      expect(result4.ratio_silver_per_labor).toBeNull();
+      expect(result4.cost_mats_copper).toBe(10000); // Cotton resolves to 0.1G = 1000 copper * 10 = 10000
     });
 
     it('should support both string and numeric keys in overrides', () => {

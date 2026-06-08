@@ -37,10 +37,11 @@ export interface RecipeMetrics {
   resolved_output_price_copper: number;
   cost_mats_copper: number;
   labor_adjusted: number;
-  profit_silver: number;
-  ratio_silver_per_labor: number;
+  profit_silver: number | null;
+  ratio_silver_per_labor: number | null;
   warnings: string[];
   ingredients: IngredientMetric[];
+  isUnpriced?: boolean;
 }
 
 /**
@@ -124,25 +125,32 @@ export function calculateRecipeMetrics(
   // 3. Adjusted Labor Integration
   const laborAdjusted = calculateAdjustedLabor(recipe.req_labor, proficiencyLevel, recipe.profession);
 
-  // 4. Net Profit (Silver)
-  // Formula: Profit_silver = ((Quantity_out * P_final_copper) - Cost_mats_copper) / 100
-  const profitSilver = ((recipe.output_amount * pFinalCopper) - costMatsCopper) / 100;
+  // Check if output is unpriced
+  const isUnpriced = (recipe.output_item_id !== 500) &&
+                     (outputOverride === undefined || outputOverride === null) &&
+                     (recipe.output_avg_7d === undefined || recipe.output_avg_7d === null) &&
+                     (recipe.output_avg_30d === undefined || recipe.output_avg_30d === null);
 
-  // 5. Silver-per-Labor Ratio
-  // Formula: Ratio_silver_per_labor = Profit_silver / Labor_adjusted
-  // Protection: if labor is 0, ratio resolves to 0
-  const ratioSilverPerLabor = laborAdjusted > 0 ? profitSilver / laborAdjusted : 0;
+  // 4. Net Profit (Silver) & 5. Silver-per-Labor Ratio
+  let profitSilver: number | null = null;
+  let ratioSilverPerLabor: number | null = null;
+
+  if (!isUnpriced) {
+    profitSilver = ((recipe.output_amount * pFinalCopper) - costMatsCopper) / 100;
+    ratioSilverPerLabor = laborAdjusted > 0 ? profitSilver / laborAdjusted : 0;
+  }
 
   return {
     recipe_id: recipe.recipe_id,
     output_item_id: recipe.output_item_id,
-    resolved_output_price_copper: pFinalCopper,
+    resolved_output_price_copper: isUnpriced ? 0 : pFinalCopper,
     cost_mats_copper: costMatsCopper,
     labor_adjusted: laborAdjusted,
     profit_silver: profitSilver,
     ratio_silver_per_labor: ratioSilverPerLabor,
     warnings,
     ingredients: ingredientsMetrics,
+    isUnpriced
   };
 }
 
