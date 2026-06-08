@@ -70,7 +70,7 @@ export const Dashboard: React.FC = () => {
   const [hideUnpriced, setHideUnpriced] = useState<boolean>(true);
   
   // Filters sliders state
-  const [minVolume, setMinVolume] = useState<number>(0);
+  const [minVolume, setMinVolume] = useState<number>(1000);
   const [maxVolume, setMaxVolume] = useState<number>(100000);
   const [minSLRatio, setMinSLRatio] = useState<number>(-100);
   const [maxSLRatio, setMaxSLRatio] = useState<number>(500);
