@@ -2,10 +2,10 @@
 
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --color-dashboard-bg: #121212;
-  --color-dashboard-surface: #1e1e1e;
-  --color-dashboard-accent: #eab308;
-  --color-dashboard-text: #f3f4f6;
+  --color-dashboard-bg: #020617;
+  --color-dashboard-surface: #0f172a;
+  --color-dashboard-accent: #38bdf8;
+  --color-dashboard-text: #ffffff;
 }
 
 @layer base {

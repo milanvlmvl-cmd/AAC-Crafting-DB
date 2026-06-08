@@ -352,9 +352,9 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="bg-dashboard-bg text-dashboard-text h-screen w-screen overflow-hidden flex flex-col font-sans select-none antialiased">
       {/* Top Header / Profile Panel */}
-      <header className="bg-dashboard-surface border-b border-[#2a2a2a] px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+      <header className="bg-dashboard-surface border-b border-slate-800/80 px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
-          <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-dashboard-accent to-yellow-300">
+          <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-dashboard-accent to-cyan-400">
             TELL NO TALES
           </h1>
           <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">
@@ -397,7 +397,7 @@ export const Dashboard: React.FC = () => {
       </header>
 
       {/* Advanced Filter Panel */}
-      <section className="bg-dashboard-surface border-b border-[#2a2a2a] px-6 py-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <section className="bg-dashboard-surface border-b border-slate-800/80 px-6 py-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Full-text Search & Profession */}
         <div className="space-y-3">
           <div>
@@ -552,7 +552,7 @@ export const Dashboard: React.FC = () => {
       </main>
 
       {/* Mandatory Development Footer */}
-      <footer className="bg-dashboard-surface border-t border-[#2a2a2a] py-4 text-center">
+      <footer className="bg-dashboard-surface border-t border-slate-800/80 py-4 text-center">
         <p className="text-xs text-slate-500 font-mono tracking-wide">
           Crafting Calculator developed by Wasbeerotb
         </p>
