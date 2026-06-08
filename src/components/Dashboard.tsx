@@ -350,9 +350,9 @@ export const Dashboard: React.FC = () => {
 
 
   return (
-    <div className="bg-[#121212] text-slate-200 h-screen w-screen overflow-hidden flex flex-col font-sans select-none antialiased">
+    <div className="bg-dashboard-bg text-dashboard-text h-screen w-screen overflow-hidden flex flex-col font-sans select-none antialiased">
       {/* Top Header / Profile Panel */}
-      <header className="bg-[#1a1a1a] border-b border-[#2a2a2a] px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+      <header className="bg-dashboard-surface border-b border-[#2a2a2a] px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
           <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-200">
             TELL NO TALES
@@ -552,7 +552,7 @@ export const Dashboard: React.FC = () => {
       </main>
 
       {/* Mandatory Development Footer */}
-      <footer className="bg-[#1a1a1a] border-t border-[#2a2a2a] py-4 text-center">
+      <footer className="bg-dashboard-surface border-t border-[#2a2a2a] py-4 text-center">
         <p className="text-xs text-slate-500 font-mono tracking-wide">
           Crafting Calculator developed by Wasbeerotb
         </p>

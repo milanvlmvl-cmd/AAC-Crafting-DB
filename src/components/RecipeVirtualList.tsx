@@ -100,7 +100,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
     return (
       <div
         style={{ ...style, height: '160px', boxSizing: 'border-box' }}
-        className="px-4 py-2 border-b border-[#222] bg-[#1a1a1a] hover:bg-[#1d1d1d] flex flex-col justify-between transition-colors duration-150 overflow-hidden"
+        className="px-4 py-2 border-b border-[#222] bg-dashboard-surface hover:bg-[#252525] flex flex-col justify-between transition-colors duration-150 overflow-hidden"
       >
         {/* Row Header */}
         <div className="flex justify-between items-center h-6">
