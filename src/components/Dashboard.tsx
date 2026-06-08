@@ -327,10 +327,10 @@ export const Dashboard: React.FC = () => {
   // Virtual Row rendering function
   if (dbLoading) {
     return (
-      <div className="flex items-center justify-center bg-[#121212] min-h-screen text-slate-200">
+      <div className="flex items-center justify-center bg-dashboard-bg min-h-screen text-dashboard-text">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-t-2 border-amber-500 border-solid rounded-full animate-spin mx-auto" />
-          <p className="font-mono text-sm uppercase tracking-wider text-amber-500">Initializing Core Engine...</p>
+          <div className="w-12 h-12 border-t-2 border-dashboard-accent border-solid rounded-full animate-spin mx-auto" />
+          <p className="font-mono text-sm uppercase tracking-wider text-dashboard-accent">Initializing Core Engine...</p>
         </div>
       </div>
     );
@@ -338,7 +338,7 @@ export const Dashboard: React.FC = () => {
 
   if (dbError) {
     return (
-      <div className="flex items-center justify-center bg-[#121212] min-h-screen text-red-500 p-6 font-mono text-center">
+      <div className="flex items-center justify-center bg-dashboard-bg min-h-screen text-red-500 p-6 font-mono text-center">
         <div className="max-w-md bg-red-950/30 border border-red-800 p-6 rounded-xl">
           <h2 className="text-xl font-bold mb-4">Core Loading Failure</h2>
           <p className="text-sm text-red-200">{dbError}</p>
@@ -354,7 +354,7 @@ export const Dashboard: React.FC = () => {
       {/* Top Header / Profile Panel */}
       <header className="bg-dashboard-surface border-b border-[#2a2a2a] px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>
-          <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-200">
+          <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-dashboard-accent to-yellow-300">
             TELL NO TALES
           </h1>
           <p className="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">
@@ -384,7 +384,7 @@ export const Dashboard: React.FC = () => {
             <select
               value={proficiency}
               onChange={(e) => setProficiency(e.target.value)}
-              className="bg-[#252525] border border-[#3a3a3a] text-slate-200 text-xs px-3 py-1.5 rounded focus:outline-none focus:border-amber-500 font-medium cursor-pointer"
+              className="bg-dashboard-surface border border-[#3a3a3a] text-dashboard-text text-xs px-3 py-1.5 rounded focus:outline-none focus:border-dashboard-accent font-medium cursor-pointer"
             >
               {PROFICIENCY_LEVELS.map((lvl) => (
                 <option key={lvl} value={lvl}>
@@ -397,7 +397,7 @@ export const Dashboard: React.FC = () => {
       </header>
 
       {/* Advanced Filter Panel */}
-      <section className="bg-[#161616] border-b border-[#242424] px-6 py-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <section className="bg-dashboard-surface border-b border-[#2a2a2a] px-6 py-4 grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Full-text Search & Profession */}
         <div className="space-y-3">
           <div>
@@ -407,7 +407,7 @@ export const Dashboard: React.FC = () => {
               placeholder="Filter by name/materials..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#222] border border-[#333] text-slate-200 text-xs px-3 py-2 rounded focus:outline-none focus:border-amber-500"
+              className="w-full bg-dashboard-bg border border-[#2a2a2a] text-dashboard-text text-xs px-3 py-2 rounded focus:outline-none focus:border-dashboard-accent"
             />
           </div>
           <div>
@@ -415,7 +415,7 @@ export const Dashboard: React.FC = () => {
             <select
               value={selectedProfession}
               onChange={(e) => setSelectedProfession(e.target.value)}
-              className="w-full bg-[#222] border border-[#333] text-slate-200 text-xs px-3 py-2 rounded focus:outline-none focus:border-amber-500 cursor-pointer"
+              className="w-full bg-dashboard-bg border border-[#2a2a2a] text-dashboard-text text-xs px-3 py-2 rounded focus:outline-none focus:border-dashboard-accent cursor-pointer"
             >
               <option value="All">All Categories</option>
               {PROFESSIONS.map((prof) => (
@@ -430,7 +430,7 @@ export const Dashboard: React.FC = () => {
         {/* Volume Threshold Range Slider */}
         <div className="space-y-2">
           <label className="block text-[9px] text-slate-500 uppercase font-mono">
-            30d Volume Limits: <span className="text-amber-500 font-bold">{minVolume} - {maxVolume}</span>
+            30d Volume Limits: <span className="text-dashboard-accent font-bold">{minVolume} - {maxVolume}</span>
           </label>
           <div className="flex items-center space-x-2 pt-2">
             <span className="text-[10px] text-slate-600">Min:</span>
@@ -441,7 +441,7 @@ export const Dashboard: React.FC = () => {
               step="100"
               value={minVolume}
               onChange={(e) => setMinVolume(parseInt(e.target.value, 10))}
-              className="w-full accent-amber-500 h-1.5 bg-zinc-800 rounded"
+              className="w-full accent-dashboard-accent h-1.5 bg-dashboard-bg rounded"
             />
           </div>
           <div className="flex items-center space-x-2">
@@ -453,7 +453,7 @@ export const Dashboard: React.FC = () => {
               step="500"
               value={maxVolume}
               onChange={(e) => setMaxVolume(parseInt(e.target.value, 10))}
-              className="w-full accent-amber-500 h-1.5 bg-zinc-800 rounded"
+              className="w-full accent-dashboard-accent h-1.5 bg-dashboard-bg rounded"
             />
           </div>
         </div>
@@ -461,7 +461,7 @@ export const Dashboard: React.FC = () => {
         {/* S/L Ratio Range Slider */}
         <div className="space-y-2">
           <label className="block text-[9px] text-slate-500 uppercase font-mono">
-            S/L Ratio Range: <span className="text-amber-500 font-bold">{minSLRatio} to {maxSLRatio} S/L</span>
+            S/L Ratio Range: <span className="text-dashboard-accent font-bold">{minSLRatio} to {maxSLRatio} S/L</span>
           </label>
           <div className="flex items-center space-x-2 pt-2">
             <span className="text-[10px] text-slate-600">Min:</span>
@@ -472,7 +472,7 @@ export const Dashboard: React.FC = () => {
               step="5"
               value={minSLRatio}
               onChange={(e) => setMinSLRatio(parseInt(e.target.value, 10))}
-              className="w-full accent-amber-500 h-1.5 bg-zinc-800 rounded"
+              className="w-full accent-dashboard-accent h-1.5 bg-dashboard-bg rounded"
             />
           </div>
           <div className="flex items-center space-x-2">
@@ -484,7 +484,7 @@ export const Dashboard: React.FC = () => {
               step="10"
               value={maxSLRatio}
               onChange={(e) => setMaxSLRatio(parseInt(e.target.value, 10))}
-              className="w-full accent-amber-500 h-1.5 bg-zinc-800 rounded"
+              className="w-full accent-dashboard-accent h-1.5 bg-dashboard-bg rounded"
             />
           </div>
         </div>
@@ -492,12 +492,12 @@ export const Dashboard: React.FC = () => {
         {/* Custom Toggle and Sort Direction */}
         <div className="flex flex-col justify-between space-y-3">
           {/* Hide Unpriced Switch */}
-          <div className="flex items-center justify-between bg-[#1f1f1f] p-2.5 rounded border border-[#2d2d2d]">
+          <div className="flex items-center justify-between bg-dashboard-bg p-2.5 rounded border border-[#2a2a2a]">
             <span className="text-xs text-slate-300 font-medium">Hide Unpriced Crafts</span>
             <button
               onClick={() => setHideUnpriced(!hideUnpriced)}
               className={`w-9 h-5 rounded-full p-0.5 transition-colors duration-200 focus:outline-none ${
-                hideUnpriced ? 'bg-amber-500' : 'bg-slate-700'
+                hideUnpriced ? 'bg-dashboard-accent' : 'bg-slate-700'
               }`}
             >
               <div
@@ -515,7 +515,7 @@ export const Dashboard: React.FC = () => {
               <select
                 value={sortField}
                 onChange={(e) => setSortField(e.target.value as any)}
-                className="w-full bg-[#222] border border-[#333] text-slate-200 text-xs px-2 py-1.5 rounded focus:outline-none focus:border-amber-500 cursor-pointer"
+                className="w-full bg-dashboard-bg border border-[#2a2a2a] text-dashboard-text text-xs px-2 py-1.5 rounded focus:outline-none focus:border-dashboard-accent cursor-pointer"
               >
                 <option value="ratio">S/L Ratio</option>
                 <option value="profit">Net Profit</option>
@@ -526,7 +526,7 @@ export const Dashboard: React.FC = () => {
               <label className="block text-[9px] text-slate-500 uppercase font-mono mb-1">Order</label>
               <button
                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                className="bg-[#222] border border-[#333] hover:border-amber-500 text-slate-200 text-xs px-3 py-1.5 rounded transition-colors duration-150 font-medium"
+                className="bg-dashboard-bg border border-[#2a2a2a] hover:border-dashboard-accent text-dashboard-text text-xs px-3 py-1.5 rounded transition-colors duration-150 font-medium"
               >
                 {sortOrder === 'asc' ? '▲ ASC' : '▼ DESC'}
               </button>

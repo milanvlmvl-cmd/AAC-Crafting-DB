@@ -100,12 +100,12 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
     return (
       <div
         style={{ ...style, height: '160px', boxSizing: 'border-box' }}
-        className="px-4 py-2 border-b border-[#222] bg-dashboard-surface hover:bg-[#252525] flex flex-col justify-between transition-colors duration-150 overflow-hidden"
+        className="px-4 py-2 border-b border-dashboard-bg bg-dashboard-surface hover:bg-zinc-800/40 flex flex-col justify-between transition-colors duration-150 overflow-hidden"
       >
         {/* Row Header */}
         <div className="flex justify-between items-center h-6">
           <div className="flex items-center space-x-3">
-            <span className="text-amber-500 font-bold text-sm tracking-wide truncate max-w-[200px] md:max-w-[300px]">
+            <span className="text-dashboard-accent font-bold text-sm tracking-wide truncate max-w-[200px] md:max-w-[300px]">
               {recipe.output_name}
             </span>
             <span className="text-[10px] text-slate-500 font-mono">ID: {recipe.recipe_id}</span>
@@ -115,7 +115,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
           </div>
           <div className="flex items-center space-x-3">
             {isUnpriced ? (
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded shadow-sm bg-zinc-800 border border-zinc-700 text-zinc-400">
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded shadow-sm bg-dashboard-bg border border-zinc-800 text-zinc-400">
                 Market Price Missing
               </span>
             ) : (
@@ -141,18 +141,18 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
         {/* Row Grid Body */}
         <div className="grid grid-cols-3 gap-4 text-[11px] text-slate-400 font-mono h-[54px] my-1">
           {/* Labor Allocation */}
-          <div className="p-1.5 bg-[#151515] rounded border border-[#2b2b2b] flex flex-col justify-between">
+          <div className="p-1.5 bg-dashboard-bg rounded border border-zinc-800/50 flex flex-col justify-between">
             <span className="text-[9px] text-slate-500 uppercase tracking-wider block">Labor Allocation</span>
             <div className="flex justify-between">
               <span>Base / Adj:</span>
               <span className="text-slate-300">
-                {recipe.req_labor} / <span className="text-amber-500">{metrics ? metrics.labor_adjusted : recipe.req_labor}</span>
+                {recipe.req_labor} / <span className="text-dashboard-accent">{metrics ? metrics.labor_adjusted : recipe.req_labor}</span>
               </span>
             </div>
           </div>
 
           {/* Market Liquidity Indicators */}
-          <div className="p-1.5 bg-[#151515] rounded border border-[#2b2b2b] flex flex-col justify-between">
+          <div className="p-1.5 bg-dashboard-bg rounded border border-zinc-800/50 flex flex-col justify-between">
             <span className="text-[9px] text-slate-500 uppercase tracking-wider block">Market Velocity</span>
             <div className="flex justify-between truncate">
               <span>30d Avg:</span>
@@ -164,7 +164,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
           </div>
 
           {/* Inline Local Price Editor */}
-          <div className="p-1.5 bg-[#151515] rounded border border-[#2b2b2b] flex flex-col justify-between">
+          <div className="p-1.5 bg-dashboard-bg rounded border border-zinc-800/50 flex flex-col justify-between">
             <span className="text-[9px] text-slate-500 uppercase tracking-wider block">Local Value (Gold)</span>
             <div className="flex items-center space-x-1">
               <input
@@ -179,7 +179,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
                 }
                 value={overrides[recipe.output_item_id] !== undefined ? overrides[recipe.output_item_id] : ''}
                 onChange={(e) => handlePriceOverride(recipe.output_item_id, e.target.value)}
-                className="w-full bg-[#222] border border-[#333] text-slate-200 text-[10px] px-1.5 py-0.5 rounded focus:outline-none focus:border-amber-500"
+                className="w-full bg-dashboard-surface border border-zinc-800 text-slate-200 text-[10px] px-1.5 py-0.5 rounded focus:outline-none focus:border-dashboard-accent"
               />
               <button
                 onClick={() => handlePriceOverride(recipe.output_item_id, '')}
@@ -193,7 +193,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
         </div>
 
         {/* Dynamic Ingredient Breakdown Checklist */}
-        <div className="border-t border-[#222] pt-1.5 h-[50px] overflow-y-auto scrollbar-none">
+        <div className="border-t border-dashboard-bg pt-1.5 h-[50px] overflow-y-auto scrollbar-none">
           <div className="flex flex-wrap gap-x-2 gap-y-1">
             {recipe.ingredients.map((ing) => {
               const ingOverride = overrides[ing.material_item_id];
@@ -206,12 +206,12 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
               return (
                 <div
                   key={ing.material_item_id}
-                  className="flex items-center space-x-1.5 bg-[#1b1b1b] px-2 py-0.5 rounded border border-[#262626] text-[10px]"
+                  className="flex items-center space-x-1.5 bg-dashboard-surface px-2 py-0.5 rounded border border-zinc-800/50 text-[10px]"
                 >
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="rounded border-[#333] text-amber-500 focus:ring-0 focus:ring-offset-0 bg-[#222] h-3 w-3"
+                    className="rounded border-zinc-800 text-dashboard-accent focus:ring-0 focus:ring-offset-0 bg-dashboard-bg h-3 w-3"
                   />
                   <span className="text-slate-300 truncate max-w-[120px]">
                     {ing.quantity}x <span className="font-semibold text-slate-200">{ing.name}</span>
@@ -232,7 +232,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
                         placeholder={resolvedPriceGold.toFixed(4)}
                         value={ingOverride !== undefined ? ingOverride : ''}
                         onChange={(e) => handlePriceOverride(ing.material_item_id, e.target.value)}
-                        className="w-14 bg-[#252525] border border-[#3a3a3a] text-slate-200 text-[9px] px-1 py-0.2 rounded text-center focus:outline-none focus:border-amber-500 font-mono"
+                        className="w-14 bg-dashboard-bg border border-zinc-800 text-slate-200 text-[9px] px-1 py-0.2 rounded text-center focus:outline-none focus:border-dashboard-accent font-mono"
                       />
                     </div>
                   )}
