@@ -330,7 +330,7 @@ export const Dashboard: React.FC = () => {
 
 
   return (
-    <div className="bg-[#121212] text-slate-200 min-h-screen flex flex-col font-sans select-none antialiased">
+    <div className="bg-[#121212] text-slate-200 h-screen w-screen overflow-hidden flex flex-col font-sans select-none antialiased">
       {/* Top Header / Profile Panel */}
       <header className="bg-[#1a1a1a] border-b border-[#2a2a2a] px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
         <div>

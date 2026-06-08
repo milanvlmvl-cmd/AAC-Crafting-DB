@@ -237,7 +237,7 @@ export const RecipeVirtualList: React.FC<RecipeVirtualListProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="w-full h-full min-h-[400px]">
+    <div ref={containerRef} className="w-full h-full">
       <List
         height={dimensions.height as number}
         itemCount={processedRecipes.length}
