@@ -24,7 +24,7 @@ interface SQLiteProviderProps {
 
 export const SQLiteValueProvider: React.FC<SQLiteProviderProps> = ({
   children,
-  databaseUrl = '/crafting.db',
+  databaseUrl = (import.meta.env?.BASE_URL || '/') + 'crafting.db',
 }) => {
   const [db, setDb] = useState<SQLiteDatabase | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

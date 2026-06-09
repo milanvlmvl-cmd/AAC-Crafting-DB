@@ -12,7 +12,7 @@ if (!container) {
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <SQLiteValueProvider databaseUrl="/crafting.db">
+    <SQLiteValueProvider databaseUrl={import.meta.env.BASE_URL + 'crafting.db'}>
       <Dashboard />
     </SQLiteValueProvider>
   </React.StrictMode>
